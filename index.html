@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,700&amp;subset=latin-ext" rel="stylesheet">
 </head>
+
 <body>
     <header>Ajpi - projekt sieci komputerowe</header>
     <nav class="main-nav">
@@ -18,9 +20,37 @@
         </ul>
     </nav>
     <main>
-        <section class="inp">Input</section>
-        <section class="out">Result</section>
+        <section class="inp">
+            <label for="ip">Podaj ip:</label>
+
+            <input type="text" id="ip" name="ip" maxlength="15" size="12">
+            <!-- <label for="ice-cream-choice">Wybierz maske:</label>
+            <input list="ice-cream-flavors" id="ice-cream-choice" name="ice-cream-choice" />
+
+            <datalist id="ice-cream-flavors">
+                <option value="Chocolate">
+                <option value="Coconut">
+                <option value="Mint">
+                <option value="Strawberry">
+                <option value="Vanilla">
+            </datalist> -->
+
+        </section>
+        <section class="out">
+            <span id="test">TEST</span>
+            <div id="addressIp">Adres Ip:</div>
+            <div id="classIp">Klasa:</div>
+            <div id="mask">Maska:</div>
+            <div id="class">Adres sieci:</div>
+            <div id="class">Adres rozgłoszeniowy:</div>
+            <div id="class">Hostów w sieci:</div>
+            <div id="class">Pierwszy host:</div>
+            <div id="class">Ostatni host:</div>
+            <div id="error"></div>
+        </section>
     </main>
     <footer>Dawid Gardziński &copy; 2019</footer>
+    <script src="script.js"></script>
 </body>
+
 </html>
