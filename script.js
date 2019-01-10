@@ -3,6 +3,7 @@ const addressIp = document.getElementById('addressIp');
 const classIp = document.getElementById('classIp');
 const mask = document.getElementById('mask');
 const test = document.getElementById('test');
+const networkAddress = document.getElementById('networkAddress');
 const error = document.getElementById('error');
 
 
@@ -11,15 +12,17 @@ ipInput.addEventListener('change', countIp)
 
 function countIp() {
     const ip = ipInput.value;
-    test.innerHTML = ip;
-    const piecesOfIp = ip.split(".");
+    let piecesOfIp = ip.split(".");
+
 
     /*WALIDACJA */
     if (piecesOfIp.length != 4) {
-        error.innerHTML = "Error: Zły adres, operacja przerwana";
+        error.innerHTML = "Error: Zły format adresu, operacja przerwana, użyj kropki do oddzielenia oktetów";
         return;
     } else {
         for (let i = 0; i < piecesOfIp.length; i++) {
+            piecesOfIp[i] = parseInt(piecesOfIp[i]);
+
             if (piecesOfIp[i] > 255 || piecesOfIp[i] < 0) {
                 error.innerHTML = "Error:   Przekroczona wartość";
                 return;
@@ -27,6 +30,9 @@ function countIp() {
         }
         error.innerHTML = "";
     }
+
+
+    test.innerHTML = ip;
 
     /*ADRES */
     showAddressIp(ip);
@@ -39,8 +45,7 @@ function countIp() {
     mask.innerHTML = "Maska: " + maskTab.join('.');
 
     /*Adres sieci */
-    // let war = 255;
-    // console.log(war.toString(2));
+
     countNetworkAddress(piecesOfIp, maskTab);
 
 }
@@ -86,9 +91,34 @@ function countMask(firstOctet) {
 }
 
 function countNetworkAddress(piecesOfIp, maskTab) {
-    console.log(piecesOfIp[0].toString(2));
-    console.log(maskTab[0].toString(2));
-    console.log(piecesOfIp);
-    console.log(maskTab);
+
+    //for (let i = 0; i < 4; i++) {
+    let i = 0; //testowo
+    piecesOfIp[i] = piecesOfIp[i].toString(2)
+    maskTab[i] = maskTab[i].toString(2);
+    let nAddress = [];
+
+    while (piecesOfIp[i].length < 8) {
+        piecesOfIp[i] = "0" + piecesOfIp[0];
+    }
+
+    while (piecesOfIp[0].length < 8) {
+        maskTab[i] = "0" + maskTab[0];
+    }
+
+    /*OPERACJA NOT */
+    for (let j = 0; j < 8; j++) {
+        if ((piecesOfIp[i].charAt(j)) == 1 && (maskTab[i].charAt(j) == 1)) {
+            nAddress += "1";
+
+        } else {
+            nAddress += "0"
+        }
+    }
+    console.log(nAddress);
+    console.log(piecesOfIp[0]);
+    console.log(maskTab[0]);
+
+    // }
 
 }
