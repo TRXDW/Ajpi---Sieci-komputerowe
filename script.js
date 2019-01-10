@@ -1,8 +1,9 @@
+const test = document.getElementById('test');
 const ipInput = document.getElementById('ip');
 const addressIp = document.getElementById('addressIp');
 const classIp = document.getElementById('classIp');
 const mask = document.getElementById('mask');
-const test = document.getElementById('test');
+const broadcast = document.getElementById('broadcastAddress');
 const networkAddress = document.getElementById('networkAddress');
 const error = document.getElementById('error');
 
@@ -17,18 +18,18 @@ function countIp() {
 
     /*WALIDACJA */
     if (piecesOfIp.length != 4) {
-        error.innerHTML = "Error: Zły format adresu, operacja przerwana, użyj kropki do oddzielenia oktetów";
-        return;
+        return errors("Zły format adresu, operacja przerwana, użyj kropki do oddzielenia oktetów");
+    } else if (false) {
+
     } else {
         for (let i = 0; i < piecesOfIp.length; i++) {
             piecesOfIp[i] = parseInt(piecesOfIp[i]);
 
             if (piecesOfIp[i] > 255 || piecesOfIp[i] < 0) {
-                error.innerHTML = "Error:   Przekroczona wartość";
-                return;
+                return errors('przekroczona wartość');
             }
         }
-        error.innerHTML = "";
+        errors("");
     }
 
 
@@ -45,9 +46,10 @@ function countIp() {
     mask.innerHTML = "Maska: " + maskTab.join('.');
 
     /*Adres sieci */
+    let netAddressTab = countNetworkAddress(piecesOfIp, maskTab);
 
-    countNetworkAddress(piecesOfIp, maskTab);
-
+    /*Adres rozgłoszeniowy */
+    countBroadcastAddress(maskTab, netAddressTab);
 }
 
 
@@ -90,35 +92,79 @@ function countMask(firstOctet) {
 
 }
 
-function countNetworkAddress(piecesOfIp, maskTab) {
+function countNetworkAddress(piecesOfIp, mTab) {
+    if (piecesOfIp.length != 4 || mTab.length != 4) {
+        return errors("Brak adresu sieci lub zły format ip");
+    } else {
+        let nAddressTab = [];
+        let copyMTab = [];
+        let copyPOI = [];
+        for (let i = 0; i < 4; i++) {
 
-    //for (let i = 0; i < 4; i++) {
-    let i = 0; //testowo
-    piecesOfIp[i] = piecesOfIp[i].toString(2)
-    maskTab[i] = maskTab[i].toString(2);
-    let nAddress = [];
+            copyPOI[i] = piecesOfIp[i].toString(2)
+            copyMTab[i] = mTab[i].toString(2);
+            let nAddress = "";
 
-    while (piecesOfIp[i].length < 8) {
-        piecesOfIp[i] = "0" + piecesOfIp[0];
-    }
+            while (copyPOI[i].length < 8) {
+                copyPOI[i] = "0" + copyPOI[i];
+            }
 
-    while (piecesOfIp[0].length < 8) {
-        maskTab[i] = "0" + maskTab[0];
-    }
+            while (copyMTab[i].length < 8) {
+                copyMTab[i] = "0" + copyMTab[i];
+            }
 
-    /*OPERACJA NOT */
-    for (let j = 0; j < 8; j++) {
-        if ((piecesOfIp[i].charAt(j)) == 1 && (maskTab[i].charAt(j) == 1)) {
-            nAddress += "1";
+            /*OPERACJA NOT */
+            for (let j = 0; j < 8; j++) {
+                if ((copyPOI[i].charAt(j)) == 1 && (copyMTab[i].charAt(j) == 1)) {
+                    nAddress += "1";
 
-        } else {
-            nAddress += "0"
+                } else {
+                    nAddress += "0";
+                }
+            }
+            nAddressTab.push(parseInt(nAddress, 2));
+
         }
+
+        networkAddress.innerHTML = "Adres sieci: " + nAddressTab.join('.');
+        return nAddressTab;
     }
-    console.log(nAddress);
-    console.log(piecesOfIp[0]);
-    console.log(maskTab[0]);
+}
 
-    // }
+function countBroadcastAddress(mTab, netAddressTab) {
+    if (netAddressTab.length != 4 || mTab.length != 4) {
+        return errors("Brak adresu sieci lub zły format ip");
+    }
+    else {
+        let broadcastAddressTab = [];
+        let copyMTab = [];
+        for (let i = 0; i < 4; i++) {
+            let notMaskPiece = "";
+            copyMTab[i] = mTab[i].toString(2);
+            /*NOT */
 
+            for (let j = 0; j < 8; j++) {
+                if (copyMTab[i].charAt(j) == 1) {
+                    notMaskPiece += "0";
+
+                } else {
+                    notMaskPiece += "1";
+                }
+            }
+            copyMTab[i] = parseInt(notMaskPiece, 2);
+
+            broadcast.innerHTML = "Adres rozgłoszeniowy: " + broadcastAddressTab.join('.');
+            broadcastAddressTab.push(copyMTab[i] + netAddressTab[i]);
+
+        }
+
+        return broadcastAddressTab;
+    }
+}
+
+function errors(err = "Nieznany") {
+    if (err === "") {
+        return error.innerHTML = "";
+    }
+    error.innerHTML = "Błąd: " + err;
 }
