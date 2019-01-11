@@ -85,6 +85,12 @@ function countMask(firstOctet) {
     } else if (firstOctet > 191 && firstOctet < 224) {
         maskTab = [255, 255, 255, 0];
         return maskTab;
+    } else if (firstOctet > 223 && firstOctet < 240) {
+        maskTab = ['Nie dotyczy'];
+        return maskTab;
+    } else if (firstOctet > 239 && firstOctet < 256) {
+        maskTab = ['Nie dotyczy'];
+        return maskTab;
     } else {
         maskTab = ['Nieznana'];
         return maskTab;
@@ -93,9 +99,12 @@ function countMask(firstOctet) {
 }
 
 function countNetworkAddress(piecesOfIp, mTab) {
-    if (piecesOfIp.length != 4 || mTab.length != 4) {
+    if(mTab[0] == 'Nie dotyczy' ){
+        networkAddress.innerHTML = "Adres sieci: " + mTab[0];
+        return;
+    } else if (piecesOfIp.length != 4 || mTab.length != 4) {
         return errors("Brak adresu sieci lub zły format ip");
-    } else {
+    }  else {
         let nAddressTab = [];
         let copyMTab = [];
         let copyPOI = [];
@@ -132,9 +141,12 @@ function countNetworkAddress(piecesOfIp, mTab) {
 }
 
 function countBroadcastAddress(mTab, netAddressTab) {
-    if (netAddressTab.length != 4 || mTab.length != 4) {
+    if(mTab[0] == 'Nie dotyczy' ){
+        broadcast.innerHTML = "Adres rozgłoszeniowy: " + mTab[0];
+        return;
+    } else if (netAddressTab.length != 4 || mTab.length != 4) {
         return errors("Brak adresu sieci lub zły format ip");
-    }
+    } 
     else {
         let broadcastAddressTab = [];
         let copyMTab = [];
@@ -153,10 +165,11 @@ function countBroadcastAddress(mTab, netAddressTab) {
             }
             copyMTab[i] = parseInt(notMaskPiece, 2);
 
-            broadcast.innerHTML = "Adres rozgłoszeniowy: " + broadcastAddressTab.join('.');
             broadcastAddressTab.push(copyMTab[i] + netAddressTab[i]);
 
         }
+
+        broadcast.innerHTML = "Adres rozgłoszeniowy: " + broadcastAddressTab.join('.');
 
         return broadcastAddressTab;
     }
