@@ -1,10 +1,14 @@
 const test = document.getElementById('test');
 const ipInput = document.getElementById('ip');
 const addressIp = document.getElementById('addressIp');
-const classIp = document.getElementById('classIp');
+const classAjpi = document.getElementById('classIp');
 const mask = document.getElementById('mask');
+const shortMaskName = document.getElementById('shortMaskName');
 const broadcast = document.getElementById('broadcastAddress');
 const networkAddress = document.getElementById('networkAddress');
+const firstHost = document.getElementById('firstHost');
+const lastHost = document.getElementById('lastHost');
+const numberOfHosts = document.getElementById('numberOfHosts');
 const error = document.getElementById('error');
 
 
@@ -17,8 +21,49 @@ function countIp() {
 
 
     /*WALIDACJA */
+    if (ipValidation(piecesOfIp) === true) {
+        return;
+    }
+
+
+    test.innerHTML = ip;
+
+
+
+    /*KLASA */
+    let classIp = countClassIp(piecesOfIp[0]);
+
+    /*MASK*/
+    let maskTab = countMask(piecesOfIp[0]);
+
+    /*SKRÓCONY ZAPIS */
+    let shortMask = countShortMaskName(maskTab);
+
+    /*Adres sieci */
+    let netAddressTab = countNetworkAddress(piecesOfIp, maskTab);
+
+
+    /*Adres rozgłoszeniowy */
+    let bAT = countBroadcastAddress(maskTab, netAddressTab);
+
+
+    /*PIERWSZY HOST */
+    const fH = fHost(netAddressTab).join('.');
+
+    /*OSTATNI HOST */
+    const lH = lHost(bAT);
+
+    const numOfHosts = countNumberOfHosts(shortMask);
+
+    /*POKAŻ NA STRONIE */
+    showOnSite(ip, classIp, maskTab, shortMask, netAddressTab, bAT, fH, lH, numOfHosts)
+
+}
+
+function ipValidation(piecesOfIp) {
     if (piecesOfIp.length != 4) {
-        return errors("Zły format adresu, operacja przerwana, użyj kropki do oddzielenia oktetów");
+        errors("Zły format adresu, operacja przerwana, użyj kropki do oddzielenia oktetów");
+        return true;
     } else if (false) {
 
     } else {
@@ -26,51 +71,37 @@ function countIp() {
             piecesOfIp[i] = parseInt(piecesOfIp[i]);
 
             if (piecesOfIp[i] > 255 || piecesOfIp[i] < 0) {
-                return errors('przekroczona wartość');
+                errors('przekroczona wartość');
+                return true;
             }
         }
         errors("");
+        return false;
     }
+}
 
-
-    test.innerHTML = ip;
-
-    /*ADRES */
-    showAddressIp(ip);
-
-    /*KLASA */
-    countClassIp(piecesOfIp[0]);
-
-    /*MASK*/
-    let maskTab = countMask(piecesOfIp[0]);
-    mask.innerHTML = "Maska: " + maskTab.join('.');
-
-    /*Adres sieci */
-    let netAddressTab = countNetworkAddress(piecesOfIp, maskTab);
-
-    /*Adres rozgłoszeniowy */
-    countBroadcastAddress(maskTab, netAddressTab);
+function errors(err = "Nieznany") {
+    if (err === "") {
+        return error.innerHTML = "";
+    }
+    return error.innerHTML = "Błąd: " + err;
 }
 
 
-function showAddressIp(ip) {
-    addressIp.innerHTML = "Adres Ip: " + ip;
-
-}
 
 function countClassIp(firstOctet) {
     if (firstOctet >= 0 && firstOctet < 128) {
-        classIp.innerHTML = "Klasa: A";
+        return "A";
     } else if (firstOctet > 127 && firstOctet < 192) {
-        classIp.innerHTML = "Klasa: B";
+        return "B";
     } else if (firstOctet > 191 && firstOctet < 224) {
-        classIp.innerHTML = "Klasa: C";
+        return "C";
     } else if (firstOctet > 223 && firstOctet < 240) {
-        classIp.innerHTML = "Klasa: D";
+        return "D";
     } else if (firstOctet > 239 && firstOctet < 256) {
-        classIp.innerHTML = "Klasa: E";
+        return "E";
     } else {
-        classIp.innerHTML = "Klasa: Nieznana";
+        return "Nieznana";
     }
 }
 
@@ -98,13 +129,30 @@ function countMask(firstOctet) {
 
 }
 
+function countShortMaskName(mTab) {
+    let numOfOne = 0;
+    let copyMTab = [];
+
+    for (let i = 0; i < mTab.length; i++) {
+        copyMTab[i] = mTab[i].toString(2);
+
+        for (let j = 0; j < 8; j++) {
+            if (copyMTab[i].charAt(j) == "1") {
+                numOfOne++;
+            }
+        }
+    }
+
+    return numOfOne;
+}
+
 function countNetworkAddress(piecesOfIp, mTab) {
-    if(mTab[0] == 'Nie dotyczy' ){
+    if (mTab[0] == 'Nie dotyczy') {
         networkAddress.innerHTML = "Adres sieci: " + mTab[0];
         return;
     } else if (piecesOfIp.length != 4 || mTab.length != 4) {
         return errors("Brak adresu sieci lub zły format ip");
-    }  else {
+    } else {
         let nAddressTab = [];
         let copyMTab = [];
         let copyPOI = [];
@@ -135,18 +183,17 @@ function countNetworkAddress(piecesOfIp, mTab) {
 
         }
 
-        networkAddress.innerHTML = "Adres sieci: " + nAddressTab.join('.');
         return nAddressTab;
     }
 }
 
 function countBroadcastAddress(mTab, netAddressTab) {
-    if(mTab[0] == 'Nie dotyczy' ){
+    if (mTab[0] == 'Nie dotyczy') {
         broadcast.innerHTML = "Adres rozgłoszeniowy: " + mTab[0];
         return;
     } else if (netAddressTab.length != 4 || mTab.length != 4) {
         return errors("Brak adresu sieci lub zły format ip");
-    } 
+    }
     else {
         let broadcastAddressTab = [];
         let copyMTab = [];
@@ -169,15 +216,58 @@ function countBroadcastAddress(mTab, netAddressTab) {
 
         }
 
-        broadcast.innerHTML = "Adres rozgłoszeniowy: " + broadcastAddressTab.join('.');
 
         return broadcastAddressTab;
     }
 }
 
-function errors(err = "Nieznany") {
-    if (err === "") {
-        return error.innerHTML = "";
+function fHost(nAddressTab) {
+    let fHostTab = [];
+
+    if (nAddressTab === undefined) {
+        fHostTab[0] = 'Nie dotyczy';
+        return fHostTab;
     }
-    error.innerHTML = "Błąd: " + err;
+    for (let i = 0; i < nAddressTab.length; i++) {
+        fHostTab[i] = nAddressTab[i];
+    }
+    fHostTab[3] = nAddressTab[3] + 1;
+
+    return fHostTab;
 }
+
+function lHost(bAT) {
+    let lHostTab = [];
+
+    if (bAT.length != 4) {
+        lHostTab[0] = 'Nie dotyczy';
+        return lHostTab;
+    }
+    for (let i = 0; i < bAT.length; i++) {
+        lHostTab[i] = bAT[i];
+    }
+    lHostTab[3] = bAT[3] - 1;
+
+    return lHostTab;
+}
+
+
+
+function countNumberOfHosts(shortMaskName) {
+
+    let exponentiation = 32 - shortMaskName;
+    return Math.pow(2, exponentiation) - 2;
+}
+
+function showOnSite(ip, classIp, maskTab, shortMask, netAddressTab, bAT, fH, lH, numOfHosts) {
+    addressIp.innerHTML = "Adres Ip: " + ip;
+    classAjpi.innerHTML = "Klasa: " + classIp;
+    mask.innerHTML = "Maska: " + maskTab.join('.');
+    shortMaskName.innerHTML = "Skrócony zapis maski: /" + shortMask;
+    networkAddress.innerHTML = "Adres sieci: " + netAddressTab.join('.');
+    broadcast.innerHTML = "Adres rozgłoszeniowy: " + bAT.join('.');
+    firstHost.innerHTML = "Pierwszy host: " + fH;
+    lastHost.innerHTML = "Ostatni host: " + lH;
+    numberOfHosts.innerHTML = "Hostów w sieci: " + numOfHosts;
+}
+
