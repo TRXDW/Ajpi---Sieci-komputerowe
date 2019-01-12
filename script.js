@@ -1,4 +1,3 @@
-const test = document.getElementById('test');
 const ipInput = document.getElementById('ip');
 const addressIp = document.getElementById('addressIp');
 const classAjpi = document.getElementById('classIp');
@@ -26,10 +25,6 @@ function countIp() {
     }
 
 
-    test.innerHTML = ip;
-
-
-
     /*KLASA */
     let classIp = countClassIp(piecesOfIp[0]);
 
@@ -53,6 +48,7 @@ function countIp() {
     /*OSTATNI HOST */
     const lH = lHost(bAT);
 
+    /*LICZBA HOSTÓW */
     const numOfHosts = countNumberOfHosts(shortMask);
 
     /*POKAŻ NA STRONIE */
