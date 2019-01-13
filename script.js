@@ -256,14 +256,14 @@ function countNumberOfHosts(shortMaskName) {
 }
 
 function showOnSite(ip, classIp, maskTab, shortMask, netAddressTab, bAT, fH, lH, numOfHosts) {
-    addressIp.innerHTML = "Adres Ip: " + ip;
-    classAjpi.innerHTML = "Klasa: " + classIp;
-    mask.innerHTML = "Maska: " + maskTab.join('.');
-    shortMaskName.innerHTML = "Skrócony zapis maski: /" + shortMask;
-    networkAddress.innerHTML = "Adres sieci: " + netAddressTab.join('.');
-    broadcast.innerHTML = "Adres rozgłoszeniowy: " + bAT.join('.');
-    firstHost.innerHTML = "Pierwszy host: " + fH;
-    lastHost.innerHTML = "Ostatni host: " + lH;
-    numberOfHosts.innerHTML = "Hostów w sieci: " + numOfHosts;
+    addressIp.innerHTML = ip;
+    classAjpi.innerHTML = classIp;
+    mask.innerHTML = maskTab.join('.');
+    shortMaskName.innerHTML = "/" + shortMask;
+    networkAddress.innerHTML = netAddressTab.join('.');
+    broadcast.innerHTML = bAT.join('.');
+    firstHost.innerHTML = fH;
+    lastHost.innerHTML = lH;
+    numberOfHosts.innerHTML = numOfHosts;
 }
 
