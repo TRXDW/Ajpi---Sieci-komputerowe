@@ -9,6 +9,7 @@ body {
     min-height: 100%;
     position: relative;
     font-family: 'Raleway', sans-serif;
+    background-color: #ffffff;
 
 }
 
@@ -29,8 +30,6 @@ header {
 .main-nav ul {
     padding: 0;
     margin: 0;
-    /* color: #ffffff;
-    background-color: rgb(37, 179, 37); */
     text-align: center;
 }
 
@@ -50,20 +49,21 @@ header {
 }
 
 main {
-    padding: 50px 0;
-    max-width: 1200px;
-    /* border: solid 1px #000000; */
-    margin: 0 auto;
-    height: 500px;
     text-align: center;
+    padding: 50px 0;
+    margin: 0 auto;
+    min-height: 500px;
+    width: 75%;
     display: flex;
     flex-wrap: wrap;
+    align-content: space-between;
+    align-items: center;
+    justify-content: space-evenly;
 }
 
 .inp {
+    background-color: #ffffff;
     border: dashed 3px #46852a;
-    width: 100%;
-    margin-bottom: 5px;
     border-radius: 15px;
     padding: 10px;
 }
@@ -74,19 +74,18 @@ input[type="text"] {
 }
 
 .out {
+    background-color: #ffffff;
     border: dashed 3px #46852a;
-    min-height: 100%;
     border-radius: 15px;
     padding: 10px;
-    width: 100%;
 }
 
-table{
+table {
     text-align: left;
     margin: 0 auto;
 }
 
-table td{
+table td {
     padding: 5px;
     border: solid 1px #000000;
     min-width: 140px;

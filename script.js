@@ -25,33 +25,22 @@ function countIp() {
     }
 
 
-    /*KLASA */
     let classIp = countClassIp(piecesOfIp[0]);
 
-    /*MASK*/
     let maskTab = countMask(piecesOfIp[0]);
 
-    /*SKRÓCONY ZAPIS */
     let shortMask = countShortMaskName(maskTab);
 
-    /*Adres sieci */
     let netAddressTab = countNetworkAddress(piecesOfIp, maskTab);
 
-
-    /*Adres rozgłoszeniowy */
     let bAT = countBroadcastAddress(maskTab, netAddressTab);
 
-
-    /*PIERWSZY HOST */
     const fH = fHost(netAddressTab).join('.');
 
-    /*OSTATNI HOST */
     const lH = lHost(bAT);
 
-    /*LICZBA HOSTÓW */
     const numOfHosts = countNumberOfHosts(shortMask);
 
-    /*POKAŻ NA STRONIE */
     showOnSite(ip, classIp, maskTab, shortMask, netAddressTab, bAT, fH, lH, numOfHosts)
 
 }
@@ -60,9 +49,15 @@ function ipValidation(piecesOfIp) {
     if (piecesOfIp.length != 4) {
         errors("Zły format adresu, operacja przerwana, użyj kropki do oddzielenia oktetów");
         return true;
-    } else if (false) {
-
     } else {
+
+        for (let i = 0; i < piecesOfIp.length; i++) {
+            if (isNaN(piecesOfIp[i])) {
+                errors("Input musi zawierać liczby oddzielone kropkami")
+                return true;
+            }
+        }
+
         for (let i = 0; i < piecesOfIp.length; i++) {
             piecesOfIp[i] = parseInt(piecesOfIp[i]);
 
@@ -112,10 +107,7 @@ function countMask(firstOctet) {
     } else if (firstOctet > 191 && firstOctet < 224) {
         maskTab = [255, 255, 255, 0];
         return maskTab;
-    } else if (firstOctet > 223 && firstOctet < 240) {
-        maskTab = ['Nie dotyczy'];
-        return maskTab;
-    } else if (firstOctet > 239 && firstOctet < 256) {
+    } else if (firstOctet > 223) {
         maskTab = ['Nie dotyczy'];
         return maskTab;
     } else {
@@ -126,6 +118,9 @@ function countMask(firstOctet) {
 }
 
 function countShortMaskName(mTab) {
+    if (mTab[0] === 'Nie dotyczy') {
+        return "Nie dotyczy";
+    }
     let numOfOne = 0;
     let copyMTab = [];
 
@@ -143,9 +138,8 @@ function countShortMaskName(mTab) {
 }
 
 function countNetworkAddress(piecesOfIp, mTab) {
-    if (mTab[0] == 'Nie dotyczy') {
-        networkAddress.innerHTML = "Adres sieci: " + mTab[0];
-        return;
+    if (mTab[0] === 'Nie dotyczy') {
+        return ['Nie dotyczy'];
     } else if (piecesOfIp.length != 4 || mTab.length != 4) {
         return errors("Brak adresu sieci lub zły format ip");
     } else {
@@ -185,8 +179,7 @@ function countNetworkAddress(piecesOfIp, mTab) {
 
 function countBroadcastAddress(mTab, netAddressTab) {
     if (mTab[0] == 'Nie dotyczy') {
-        broadcast.innerHTML = "Adres rozgłoszeniowy: " + mTab[0];
-        return;
+        return ['Nie dotyczy'];
     } else if (netAddressTab.length != 4 || mTab.length != 4) {
         return errors("Brak adresu sieci lub zły format ip");
     }
@@ -218,18 +211,20 @@ function countBroadcastAddress(mTab, netAddressTab) {
 }
 
 function fHost(nAddressTab) {
-    let fHostTab = [];
+    if (nAddressTab[0] === 'Nie dotyczy') {
 
-    if (nAddressTab === undefined) {
-        fHostTab[0] = 'Nie dotyczy';
+        return ['Nie dotyczy'];
+    } else {
+        let fHostTab = [];
+
+        for (let i = 0; i < nAddressTab.length; i++) {
+            fHostTab[i] = nAddressTab[i];
+        }
+        fHostTab[3] = nAddressTab[3] + 1;
+
         return fHostTab;
     }
-    for (let i = 0; i < nAddressTab.length; i++) {
-        fHostTab[i] = nAddressTab[i];
-    }
-    fHostTab[3] = nAddressTab[3] + 1;
 
-    return fHostTab;
 }
 
 function lHost(bAT) {
@@ -239,6 +234,7 @@ function lHost(bAT) {
         lHostTab[0] = 'Nie dotyczy';
         return lHostTab;
     }
+
     for (let i = 0; i < bAT.length; i++) {
         lHostTab[i] = bAT[i];
     }
@@ -250,7 +246,9 @@ function lHost(bAT) {
 
 
 function countNumberOfHosts(shortMaskName) {
-
+    if (shortMaskName === 'Nie dotyczy') {
+        return 'Nie dotyczy';
+    }
     let exponentiation = 32 - shortMaskName;
     return Math.pow(2, exponentiation) - 2;
 }
