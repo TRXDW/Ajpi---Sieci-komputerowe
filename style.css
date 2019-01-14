@@ -9,13 +9,9 @@ body {
     min-height: 100%;
     position: relative;
     font-family: 'Quicksand', sans-serif;
-
     background: #2c3e50;
-    /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #2c3e50, #fd746c);
-    /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #2c3e50, #fd746c);
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 header {
@@ -43,7 +39,7 @@ header {
     padding: 10px 12px;
     font-size: 1.3rem;
     cursor: pointer;
-    transition: border-bottom .2s ease;
+    transition: all .2s ease;
     box-sizing: border-box;
     height: 50px;
 }
@@ -70,16 +66,22 @@ main {
     background-color: #ffffff;
     border-radius: 15px;
     padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
     -webkit-box-shadow: 0px 0px 11px 0px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 0px 0px 11px 0px rgba(0, 0, 0, 0.75);
     box-shadow: 0px 0px 11px 0px rgba(0, 0, 0, 0.75);
 }
+
+
 
 input[type="text"],
 select {
     padding: 5px 10px;
     font-size: 20px;
     width: 200px;
+    height: 37px;
     box-sizing: border-box;
 }
 
@@ -104,6 +106,7 @@ table td {
     min-width: 140px;
 }
 
+
 footer {
     position: absolute;
     left: 0;
@@ -112,4 +115,17 @@ footer {
     width: 100%;
     font-size: 1.3rem;
     color: #ffffff;
+}
+
+@media (max-width : 500px) {
+    .inp {
+        flex-wrap: wrap;
+        margin-bottom: 15px;
+
+    }
+
+    label {
+        display: block;
+
+    }
 }
