@@ -49,9 +49,6 @@ function countIp() {
 
 }
 
-function test(m) {
-    console.log(m);
-}
 
 function ipValidation(piecesOfIp) {
     if (piecesOfIp.length != 4) {
@@ -60,7 +57,7 @@ function ipValidation(piecesOfIp) {
     } else {
 
         for (let i = 0; i < piecesOfIp.length; i++) {
-            if (isNaN(piecesOfIp[i])) {
+            if (isNaN(piecesOfIp[i]) || piecesOfIp[i] === " ") {
                 errors("Input musi zawierać liczby oddzielone kropkami")
                 return true;
             }
