@@ -36,7 +36,6 @@ header {
 .main-nav ul li {
     color: #ffffff;
     display: inline-flex;
-    padding: 10px 12px;
     font-size: 1.3rem;
     cursor: pointer;
     transition: all .2s ease;
@@ -48,6 +47,14 @@ header {
     border-bottom: solid 4px #ffffff;
     border-radius: 25%;
 
+}
+
+a {
+    padding: 10px 12px;
+
+    color: #ffffff;
+    text-decoration: none;
+    display: block;
 }
 
 main {

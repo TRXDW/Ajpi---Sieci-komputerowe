@@ -37,7 +37,7 @@ function countIp() {
 
     const fH = fHost(netAddressTab).join('.');
 
-    const lH = lHost(bAT);
+    const lH = lHost(bAT).join('.');
 
     const numOfHosts = countNumberOfHosts(shortMask);
 
