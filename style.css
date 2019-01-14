@@ -8,21 +8,25 @@ body {
     padding: 0;
     min-height: 100%;
     position: relative;
-    font-family: 'Raleway', sans-serif;
-    background-color: #ffffff;
+    font-family: 'Quicksand', sans-serif;
 
+    background: #2c3e50;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #2c3e50, #fd746c);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #2c3e50, #fd746c);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 header {
     text-align: center;
     font-size: 2rem;
-    color: #46852a;
+    font-weight: bold;
+    color: #ffffff;
     padding: 20px 0;
-    border-bottom: dashed 3px #46852a;
 }
 
 .main-nav {
-    border-bottom: dashed 3px #46852a;
     padding: 12px 0;
 }
 
@@ -34,17 +38,19 @@ header {
 }
 
 .main-nav ul li {
+    color: #ffffff;
     display: inline-flex;
     padding: 10px 12px;
     font-size: 1.3rem;
     cursor: pointer;
-    transition: border-bottom .1s ease;
+    transition: border-bottom .2s ease;
     box-sizing: border-box;
     height: 50px;
 }
 
 .main-nav ul li:hover {
-    border-bottom: solid 3px #46852a;
+    border-bottom: solid 4px #ffffff;
+    border-radius: 25%;
 
 }
 
@@ -53,31 +59,38 @@ main {
     padding: 50px 0;
     margin: 0 auto;
     min-height: 500px;
-    width: 75%;
+    max-width: 500px;
     display: flex;
     flex-wrap: wrap;
-    align-content: space-between;
     align-items: center;
     justify-content: space-evenly;
 }
 
 .inp {
     background-color: #ffffff;
-    border: dashed 3px #46852a;
     border-radius: 15px;
     padding: 10px;
+    -webkit-box-shadow: 0px 0px 11px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 11px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 11px 0px rgba(0, 0, 0, 0.75);
 }
 
-input[type="text"] {
+input[type="text"],
+select {
     padding: 5px 10px;
     font-size: 20px;
+    width: 200px;
+    box-sizing: border-box;
 }
+
 
 .out {
     background-color: #ffffff;
-    border: dashed 3px #46852a;
     border-radius: 15px;
     padding: 10px;
+    -webkit-box-shadow: 0px 0px 11px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 11px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 11px 0px rgba(0, 0, 0, 0.75);
 }
 
 table {
@@ -87,7 +100,7 @@ table {
 
 table td {
     padding: 5px;
-    border: solid 1px #000000;
+    border: solid 1px #615e5e;
     min-width: 140px;
 }
 
@@ -98,5 +111,5 @@ footer {
     text-align: center;
     width: 100%;
     font-size: 1.3rem;
-    color: #46852a;
+    color: #ffffff;
 }

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ajpi</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,700&amp;subset=latin-ext" rel="stylesheet">
+
+    <link rel="shortcut icon" type="image/png" href="favicon.ico" />
+</head>
+
+<body>
+    <header>Ajpi - projekt sieci komputerowe</header>
+    <nav class="main-nav">
+        <ul>
+            <li>Klasowe</li>
+            <li>Bezklasowe</li>
+            <li>Jak liczyć?</li>
+        </ul>
+    </nav>
+    <main>
+        <section class="inp">
+            <label for="ip">Podaj ip:</label>
+
+            <input type="text" id="ip" name="ip" maxlength="15" size="12">
+            <!-- <label for="ice-cream-choice">Wybierz maske:</label>
+            <input list="ice-cream-flavors" id="ice-cream-choice" name="ice-cream-choice" />
+
+            <datalist id="ice-cream-flavors">
+                <option value="Chocolate">
+                <option value="Coconut">
+                <option value="Mint">
+                <option value="Strawberry">
+                <option value="Vanilla">
+            </datalist> -->
+
+        </section>
+        <section class="out">
+            <table>
+                <tr>
+                    <td>Adres Ip:</td>
+                    <td id="addressIp">----------------</td>
+                </tr>
+                <tr>
+                    <td>Klasa:</td>
+                    <td id="classIp">----------------</td>
+                </tr>
+                <tr>
+                    <td>Maska:</td>
+                    <td id="mask">----------------</td>
+                </tr>
+                <tr>
+                    <td>Skrócony zapis maski:</td>
+                    <td id="shortMaskName">----------------</td>
+                </tr>
+                <tr>
+                    <td>Adres sieci:</td>
+                    <td id="networkAddress">----------------</td>
+                </tr>
+                <tr>
+                    <td>Adres rozgłoszeniowy:</td>
+                    <td id="broadcastAddress">----------------</td>
+                </tr>
+                <tr>
+                    <td>Pierwszy host:</td>
+                    <td id="firstHost">----------------</td>
+                </tr>
+                <tr>
+                    <td>Ostatni host:</td>
+                    <td id="lastHost">----------------</td>
+                </tr>
+                <tr>
+                    <td>Hostów w sieci:</td>
+                    <td id="numberOfHosts">----------------</td>
+                </tr>
+            </table>
+            <div id="error"></div>
+        </section>
+    </main>
+    <footer>Dawid Gardziński &copy; 2019</footer>
+    <script src="script.js"></script>
+</body>
+
+</html>
