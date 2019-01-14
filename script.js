@@ -14,8 +14,11 @@ const error = document.getElementById('error');
 ipInput.addEventListener('change', countIp)
 
 
+
 function countIp() {
     const ip = ipInput.value;
+
+
     let piecesOfIp = ip.split(".");
 
 
@@ -23,6 +26,7 @@ function countIp() {
     if (ipValidation(piecesOfIp) === true) {
         return;
     }
+
 
 
     let classIp = countClassIp(piecesOfIp[0]);
@@ -43,6 +47,10 @@ function countIp() {
 
     showOnSite(ip, classIp, maskTab, shortMask, netAddressTab, bAT, fH, lH, numOfHosts)
 
+}
+
+function test(m) {
+    console.log(m);
 }
 
 function ipValidation(piecesOfIp) {
@@ -98,7 +106,22 @@ function countClassIp(firstOctet) {
 
 function countMask(firstOctet) {
     let maskTab = [];
-    if (firstOctet >= 0 && firstOctet < 128) {
+
+    if (firstOctet > 223) {
+        maskTab = ['Nie dotyczy'];
+        return maskTab;
+    } else if (document.getElementById('m')) {
+        const maskInput = document.getElementById('m');
+
+        const maskV = maskInput.value;
+        maskTab = maskInput[maskV].innerHTML.split(".");
+
+        for (let i = 0; i < maskTab.length; i++) {
+            maskTab[i] = parseInt(maskTab[i]);
+        }
+
+        return maskTab;
+    } else if (firstOctet >= 0 && firstOctet < 128) {
         maskTab = [255, 0, 0, 0];
         return maskTab;
     } else if (firstOctet > 127 && firstOctet < 192) {
@@ -106,9 +129,6 @@ function countMask(firstOctet) {
         return maskTab;
     } else if (firstOctet > 191 && firstOctet < 224) {
         maskTab = [255, 255, 255, 0];
-        return maskTab;
-    } else if (firstOctet > 223) {
-        maskTab = ['Nie dotyczy'];
         return maskTab;
     } else {
         maskTab = ['Nieznana'];
