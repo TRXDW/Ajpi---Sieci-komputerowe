@@ -11,8 +11,8 @@ const numberOfHosts = document.getElementById('numberOfHosts');
 const error = document.getElementById('error');
 
 
-ipInput.addEventListener('change', countIp)
-
+ipInput.addEventListener('change', countIp);
+document.getElementById('m').addEventListener('change', countIp);
 
 
 function countIp() {
@@ -23,7 +23,7 @@ function countIp() {
 
 
     /*WALIDACJA */
-    if (ipValidation(piecesOfIp) === true) {
+    if (ipValidation(piecesOfIp, ip) === true) {
         return;
     }
 
@@ -50,8 +50,10 @@ function countIp() {
 }
 
 
-function ipValidation(piecesOfIp) {
-    if (piecesOfIp.length != 4) {
+function ipValidation(piecesOfIp, ip) {
+    if (ip == false) {
+        return true;
+    } else if (piecesOfIp.length != 4) {
         errors("Zły format adresu, operacja przerwana, użyj kropki do oddzielenia oktetów");
         return true;
     } else {
@@ -262,7 +264,7 @@ function lHost(bAT, shortMask) {
 
 
 function countNumberOfHosts(shortMaskName) {
-    if (shortMaskName === 'Nie dotyczy'|| shortMaskName >= 31) {
+    if (shortMaskName === 'Nie dotyczy' || shortMaskName >= 31) {
         return 'Nie dotyczy';
     }
     let exponentiation = 32 - shortMaskName;
