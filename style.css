@@ -143,6 +143,9 @@ footer {
     right: 50px;
 }
 
+.hide {
+    display: none;
+}
 
 @media (max-width : 500px) {
     .inp {

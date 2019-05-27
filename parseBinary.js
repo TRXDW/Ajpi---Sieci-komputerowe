@@ -46,7 +46,7 @@ btn.addEventListener('click', () => {
     lastHost.innerHTML = obj.lastHostArr.join(".");
 })
 
-function getAjpiObj() {
+function getAjpiObj(json = false) {
     let addresArr = addressIp.innerHTML.split(".");
     let classIp = classAjpi.innerHTML;
     let maskArr = mask.innerHTML.split(".");
@@ -94,4 +94,23 @@ function getAjpiObj() {
 
 function dec2bin(dec) {
     return (dec >>> 0).toString(2).padStart(8, '0');
+}
+
+
+
+const jsonBtn = document.getElementById('json');
+jsonBtn.addEventListener('click', downloadJSON);
+
+function downloadJSON() {
+
+    const obj = getAjpiObj(true);
+    if (obj.addresArr.length !== 4) {
+        return;
+    }
+
+    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(obj));
+    var dlAnchorElem = document.getElementById('downloadAnchorElem');
+    dlAnchorElem.setAttribute("href", dataStr);
+    dlAnchorElem.setAttribute("download", "ip.json");
+    dlAnchorElem.click();
 }
