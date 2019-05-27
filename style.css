@@ -110,6 +110,8 @@ table td {
     padding: 5px;
     border: solid 1px #615e5e;
     min-width: 140px;
+    font-family: 'Inconsolata', monospace;
+
 }
 
 
@@ -122,6 +124,25 @@ footer {
     font-size: 1.3rem;
     color: #ffffff;
 }
+
+.buttons {
+    position: fixed;
+    top: 50%;
+    right: 20px;
+    display: grid;
+    gap: 10px;
+}
+
+.buttons__button {
+    border: 0;
+    padding: 20px 30px;
+    background-color: #00000088;
+    font-size: 1.2rem;
+    color: #ffffff;
+    cursor: pointer;
+    right: 50px;
+}
+
 
 @media (max-width : 500px) {
     .inp {
