@@ -46,7 +46,7 @@ btn.addEventListener('click', () => {
     lastHost.innerHTML = obj.lastHostArr.join(".");
 })
 
-function getAjpiObj(json = false) {
+function getAjpiObj() {
     let addresArr = addressIp.innerHTML.split(".");
     let classIp = classAjpi.innerHTML;
     let maskArr = mask.innerHTML.split(".");
@@ -90,6 +90,22 @@ function getAjpiObj(json = false) {
 
 }
 
+function doJSONObject() {
+    const obj = {
+        addresArr: addressIp.innerHTML.split("."),
+        classIp: classAjpi.innerHTML,
+        maskArr: mask.innerHTML.split("."),
+        shortMask: shortMaskName.innerHTML,
+        broadcastArr: broadcast.innerHTML.split("."),
+        networkAddresArr: networkAddress.innerHTML.split("."),
+        firstHostArr: firstHost.innerHTML.split("."),
+        lastHostArr: lastHost.innerHTML.split("."),
+        numOfH: numberOfHosts.innerHTML
+    }
+
+    return obj;
+}
+
 
 
 function dec2bin(dec) {
@@ -103,8 +119,15 @@ jsonBtn.addEventListener('click', downloadJSON);
 
 function downloadJSON() {
 
-    const obj = getAjpiObj(true);
+    const obj = doJSONObject();
     if (obj.addresArr.length !== 4) {
+        return;
+    }
+
+    const choose = confirm("Uwaga! Próbujesz ściągnąć plik .json, zawierający obiekt javascript zawierające informacje podane poniżej. Czy jesteś pewien? Tak(OK)/Nie(anuluj)");
+
+
+    if (!choose) {
         return;
     }
 

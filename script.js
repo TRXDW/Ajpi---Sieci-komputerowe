@@ -12,7 +12,10 @@ const error = document.getElementById('error');
 
 
 ipInput.addEventListener('change', countIp);
-document.getElementById('m').addEventListener('change', countIp);
+
+if (document.getElementById("m")) {
+    document.getElementById('m').addEventListener('change', countIp);
+}
 
 
 function countIp() {
